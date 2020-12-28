@@ -87,3 +87,4 @@ def lostToString(arr):
 
 for result in results:
 	print(result[0]+" -- Wins: "+str(result[1]) + " -- Lost to: " + lostToString(result[2]) + "\n<br/>")
+	
