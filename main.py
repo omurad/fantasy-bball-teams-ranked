@@ -59,22 +59,26 @@ for teamIndex in range(10):
 			else:
 				ties = ties + 1
 
-		# Team wins
+		# Team won
 		if teamScore > matchupScore:
 			wonMatchups += 1
 		# Tie, break with points stat
 		elif teamScore == matchupScore and team[9] > matchup[9]:
 			wonMatchups += 1
+		# Team lost
 		else:
 			lostTo.append(matchup[0])
 	
 	results.append([team[0], wonMatchups, lostTo])
 
+# Sort value handler
 def sortByWins(arr):
 	return arr[1]
 
+# Sort results array DESC by wins
 results.sort(key=sortByWins, reverse=True)
 
+# Concat losses into string
 def lostToString(arr):
 	string = ""
 	for i, defeat in enumerate(arr):
@@ -85,6 +89,7 @@ def lostToString(arr):
 	
 	return string
 
+# Print results in HTML friendly format
 for result in results:
 	print(result[0]+" -- Wins: "+str(result[1]) + " -- Lost to: " + lostToString(result[2]) + "\n<br/>")
 	
