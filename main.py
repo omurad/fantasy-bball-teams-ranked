@@ -3,6 +3,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from tabulate import tabulate
 
 options = Options()
 options.headless = True
@@ -90,6 +91,25 @@ def lostToString(arr):
 	return string
 
 # Print results in HTML friendly format
-for result in results:
-	print(result[0]+" -- Wins: "+str(result[1]) + " -- Lost to: " + lostToString(result[2]) + "\n<br/>")
+print("Team records")
+print(tabulate(results, tablefmt='html'))
+
+# Get stat leaders
+stats = [["FG%", "FT%", "3PM", "3P%", "REB", "AST", "STL", "BLK", "PTS"], []]
+# Loop over stats
+for statIndex in range(1, 10):
+	statLeader = ""
+	topStat = float(0)
+	# Loop over teams
+	for team in teams:
+		# New stat leader
+		if team[statIndex] > topStat:
+			statLeader = team[0]
+		# Tie for stat leader
+		elif team[statIndex] == topStat:
+			statLeader += ", "+team[0]
 	
+	stats[1].append(statLeader)
+	
+print("Top stat performers")
+print(tabulate(stats, tablefmt='html'))
