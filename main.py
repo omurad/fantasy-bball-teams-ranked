@@ -10,7 +10,7 @@ options.headless = True
 
 browser = webdriver.Firefox(options=options)
 
-week = 1
+week = 2
 
 browser.get("https://fantasy.espn.com/basketball/league/scoreboard?leagueId=73608366&matchupPeriodId="+str(week))
 
@@ -30,8 +30,10 @@ for team in browser.find_elements_by_css_selector("tr.Table__TR--sm"):
 			stats.append(stat.text)
 	teams.append(stats)
 
+"""
 for team in teams:
 	print(team)
+"""
 
 browser.quit()
 
@@ -105,6 +107,7 @@ for statIndex in range(1, 10):
 		# New stat leader
 		if team[statIndex] > topStat:
 			statLeader = team[0]
+			topStat = team[statIndex]
 		# Tie for stat leader
 		elif team[statIndex] == topStat:
 			statLeader += ", "+team[0]
