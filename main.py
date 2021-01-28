@@ -10,7 +10,9 @@ options.headless = True
 
 browser = webdriver.Firefox(options=options)
 
-week = 2
+week = 6
+
+print("<h2>Week "+str(week)+"</h2>")
 
 browser.get("https://fantasy.espn.com/basketball/league/scoreboard?leagueId=73608366&matchupPeriodId="+str(week))
 
@@ -30,14 +32,20 @@ for team in browser.find_elements_by_css_selector("tr.Table__TR--sm"):
 			stats.append(stat.text)
 	teams.append(stats)
 
-"""
-for team in teams:
-	print(team)
-"""
-
 browser.quit()
 
 results = []
+
+# Concat losses into string
+def lostToString(arr):
+	string = ""
+	for i, defeat in enumerate(arr):
+		if i:
+			string += ", "+defeat
+		else:
+			string += defeat
+	
+	return string
 
 # Simulate matchups
 for teamIndex in range(10):
@@ -72,7 +80,7 @@ for teamIndex in range(10):
 		else:
 			lostTo.append(matchup[0])
 	
-	results.append([team[0], wonMatchups, lostTo])
+	results.append([team[0], wonMatchups, lostToString(lostTo)])
 
 # Sort value handler
 def sortByWins(arr):
@@ -81,19 +89,8 @@ def sortByWins(arr):
 # Sort results array DESC by wins
 results.sort(key=sortByWins, reverse=True)
 
-# Concat losses into string
-def lostToString(arr):
-	string = ""
-	for i, defeat in enumerate(arr):
-		if i:
-			string += ", "+defeat
-		else:
-			string += defeat
-	
-	return string
-
 # Print results in HTML friendly format
-print("Team records")
+print("<h4>All Matchups</h4>")
 print(tabulate(results, tablefmt='html'))
 
 # Get stat leaders
@@ -114,5 +111,5 @@ for statIndex in range(1, 10):
 	
 	stats[1].append(statLeader)
 	
-print("Top stat performers")
+print("<h4>Top stat performers</h4>")
 print(tabulate(stats, tablefmt='html'))
