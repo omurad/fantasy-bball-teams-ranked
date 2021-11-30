@@ -23,9 +23,9 @@ teams = []
 WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "tr.Table__TR--sm")))
 
 # Loop over teams and store stats
-for team in browser.find_elements_by_css_selector("tr.Table__TR--sm"):
+for team in browser.find_elements(By.CSS_SELECTOR, "tr.Table__TR--sm"):
 	stats = []
-	for stat in team.find_elements_by_css_selector("td div"):
+	for stat in team.find_elements(By.CSS_SELECTOR, "td div"):
 		try:
 			stats.append(float(stat.text))
 		except:
@@ -90,7 +90,7 @@ def sortByWins(arr):
 results.sort(key=sortByWins, reverse=True)
 
 # Print results in HTML friendly format
-print("<h4>All Matchups</h4>")
+print("<h4>Record vs. all other teams</h4>")
 print(tabulate(results, tablefmt='html'))
 
 # Get stat leaders
