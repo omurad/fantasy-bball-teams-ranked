@@ -10,7 +10,7 @@ options.headless = True
 
 browser = webdriver.Firefox(options=options)
 
-week = 15
+week = 14
 
 print("<h2>Week "+str(week)+"</h2>")
 
